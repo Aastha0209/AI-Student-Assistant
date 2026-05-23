@@ -72,3 +72,47 @@ body{
   border-radius:15px;
   width:300px;
 }
+.auth-container{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.auth-form{
+  width:350px;
+  background:rgba(255,255,255,0.05);
+  padding:40px;
+  border-radius:15px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.auth-form h2{
+  text-align:center;
+}
+
+.auth-form input{
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  outline:none;
+}
+
+.auth-form button{
+  padding:14px;
+  border:none;
+  background:#7c3aed;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.auth-form p{
+  text-align:center;
+}
+
+.auth-form a{
+  color:#a78bfa;
+}
