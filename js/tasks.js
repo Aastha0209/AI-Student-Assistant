@@ -1,4 +1,4 @@
-import { database } from "./firebase-config.js";
+import { database, auth } from "./firebase-config.js";
 
 import {
 
@@ -12,12 +12,39 @@ import {
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+import {
+
+  onAuthStateChanged
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 const taskForm = document.querySelector("#task-form");
 
 const taskInput = document.querySelector("#task-input");
 
 const taskList = document.querySelector("#task-list");
+
+
+let currentUser = null;
+
+
+// CHECK USER LOGIN
+onAuthStateChanged(auth, (user) => {
+
+  if(user){
+
+    currentUser = user;
+
+    loadTasks();
+
+  } else {
+
+    window.location.href = "login.html";
+
+  }
+
+});
 
 
 // ADD TASK
@@ -29,53 +56,72 @@ taskForm.addEventListener("submit", (e) => {
 
   if(taskText === "") return;
 
-  push(ref(database, "tasks"), {
+  push(
 
-    text: taskText
+    ref(database, "tasks/" + currentUser.uid),
 
-  });
+    {
+
+      text: taskText
+
+    }
+
+  );
 
   taskInput.value = "";
 
 });
 
 
-// LOAD TASKS
-onValue(ref(database, "tasks"), (snapshot) => {
+// LOAD USER TASKS
+function loadTasks(){
 
-  taskList.innerHTML = "";
+  onValue(
 
-  const data = snapshot.val();
+    ref(database, "tasks/" + currentUser.uid),
 
-  // IMPORTANT FIX
-  if(data){
+    (snapshot) => {
 
-    for(let id in data){
+      taskList.innerHTML = "";
 
-      const li = document.createElement("li");
+      const data = snapshot.val();
 
-      li.innerHTML = `
+      if(data){
 
-        ${data[id].text}
+        for(let id in data){
 
-        <button onclick="deleteTask('${id}')">
-          Delete
-        </button>
+          const li = document.createElement("li");
 
-      `;
+          li.innerHTML = `
 
-      taskList.appendChild(li);
+            ${data[id].text}
+
+            <button onclick="deleteTask('${id}')">
+              Delete
+            </button>
+
+          `;
+
+          taskList.appendChild(li);
+
+        }
+
+      }
 
     }
 
-  }
+  );
 
-});
+}
 
 
 // DELETE TASK
 window.deleteTask = function(id){
 
-  remove(ref(database, "tasks/" + id));
+  remove(
+
+    ref(database, "tasks/" + currentUser.uid + "/" + id)
+
+  );
 
 };

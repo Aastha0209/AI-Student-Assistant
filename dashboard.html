@@ -108,6 +108,45 @@
 
       </div>
 
+
+      <!-- ATTENDANCE TRACKER -->
+      <div class="task-section">
+
+        <h2>Attendance Tracker</h2>
+
+        <form id="attendance-form">
+
+          <input
+            type="text"
+            id="subject-name"
+            placeholder="Subject Name"
+            required
+          >
+
+          <input
+            type="number"
+            id="attended"
+            placeholder="Attended"
+            required
+          >
+
+          <input
+            type="number"
+            id="total"
+            placeholder="Total Lectures"
+            required
+          >
+
+          <button type="submit">
+            Add Attendance
+          </button>
+
+        </form>
+
+        <ul id="attendance-list"></ul>
+
+      </div>
+
     </div>
 
   </div>
@@ -118,6 +157,9 @@
 
   <!-- LOGOUT SCRIPT -->
   <script type="module" src="js/logout.js"></script>
+
+  <!-- ATTENDANCE SCRIPT -->
+  <script type="module" src="js/attendance.js"></script>
 
 </body>
 </html>
