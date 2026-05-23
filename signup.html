@@ -7,19 +7,34 @@
 
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
   <div class="auth-container">
 
-    <form class="auth-form">
+    <form class="auth-form" id="signup-form">
 
       <h2>Create Account</h2>
 
-      <input type="text" placeholder="Full Name" required>
+      <input
+        type="text"
+        placeholder="Full Name"
+        required
+      >
 
-      <input type="email" placeholder="Enter Email" required>
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter Email"
+        required
+      >
 
-      <input type="password" placeholder="Create Password" required>
+      <input
+        type="password"
+        name="password"
+        placeholder="Create Password"
+        required
+      >
 
       <button type="submit">
         Signup
@@ -33,6 +48,8 @@
     </form>
 
   </div>
+
+  <script type="module" src="js/auth.js"></script>
 
 </body>
 </html>

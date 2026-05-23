@@ -116,3 +116,76 @@ body{
 .auth-form a{
   color:#a78bfa;
 }
+/* DASHBOARD */
+
+.dashboard{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:250px;
+  background:#111827;
+  padding:30px 20px;
+}
+
+.sidebar h2{
+  margin-bottom:40px;
+  color:#a78bfa;
+}
+
+.sidebar ul{
+  list-style:none;
+}
+
+.sidebar ul li{
+  margin:20px 0;
+  cursor:pointer;
+  color:#e5e7eb;
+}
+
+.main-content{
+  flex:1;
+  padding:30px;
+}
+
+.topbar{
+  margin-bottom:30px;
+}
+
+.cards{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.dashboard-card{
+  background:rgba(255,255,255,0.05);
+  padding:30px;
+  border-radius:15px;
+  width:250px;
+}
+
+.dashboard-card h3{
+  margin-bottom:10px;
+}
+
+.dashboard-card p{
+  font-size:28px;
+  color:#a78bfa;
+}
+
+.task-section{
+  margin-top:40px;
+  background:rgba(255,255,255,0.05);
+  padding:30px;
+  border-radius:15px;
+}
+
+.task-section ul{
+  margin-top:20px;
+}
+
+.task-section li{
+  margin:10px 0;
+}
