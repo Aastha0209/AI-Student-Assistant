@@ -78,26 +78,37 @@
       </div>
 
 
-      <!-- TASK SECTION -->
+      <!-- TASK MANAGER -->
       <div class="task-section">
 
-        <h2>Today's Tasks</h2>
+        <h2>Task Manager</h2>
 
-        <ul>
+        <form id="task-form">
 
-          <li>Complete DBMS Assignment</li>
+          <input
+            type="text"
+            id="task-input"
+            placeholder="Enter Task"
+            required
+          >
 
-          <li>Study Firebase Authentication</li>
+          <button type="submit">
+            Add Task
+          </button>
 
-          <li>Practice DSA Questions</li>
+        </form>
 
-        </ul>
+        <ul id="task-list"></ul>
 
       </div>
 
     </div>
 
   </div>
+
+
+  <!-- TASK SCRIPT -->
+  <script type="module" src="js/tasks.js"></script>
 
 </body>
 </html>
