@@ -189,3 +189,22 @@ body{
 .task-section li{
   margin:10px 0;
 }
+#logout-btn{
+
+  width:100%;
+
+  padding:10px;
+
+  border:none;
+
+  border-radius:8px;
+
+  background:#ef4444;
+
+  color:white;
+
+  cursor:pointer;
+
+  margin-top:20px;
+
+}
