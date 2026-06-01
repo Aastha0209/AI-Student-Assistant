@@ -1,16 +1,21 @@
-import { database, auth } from "./firebase-config.js";
+import {
+
+  database,
+  auth
+
+} from "./firebase-config.js";
+
 
 import {
 
   ref,
-
   push,
-
   onValue,
-
-  remove
+  remove,
+  update
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 
 import {
 
@@ -19,18 +24,41 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const taskForm = document.querySelector("#task-form");
 
-const taskInput = document.querySelector("#task-input");
 
-const taskList = document.querySelector("#task-list");
+// ELEMENTS
+const taskForm =
+document.querySelector("#task-form");
+
+
+const taskInput =
+document.querySelector("#task-input");
+
+
+const taskList =
+document.querySelector("#task-list");
+
+
+const taskCount =
+document.querySelector("#task-count");
+
+
+const completedCount =
+document.querySelector("#completed-count");
+
+
+const pendingCount =
+document.querySelector("#pending-count");
+
 
 
 let currentUser = null;
 
 
-// CHECK USER LOGIN
-onAuthStateChanged(auth, (user) => {
+
+
+// AUTH CHECK
+onAuthStateChanged(auth, (user)=>{
 
   if(user){
 
@@ -38,75 +66,166 @@ onAuthStateChanged(auth, (user) => {
 
     loadTasks();
 
-  } else {
+  }
 
-    window.location.href = "login.html";
+  else{
+
+    window.location.href =
+    "login.html";
 
   }
 
 });
 
 
+
+
 // ADD TASK
-taskForm.addEventListener("submit", (e) => {
+taskForm.addEventListener(
+"submit",
+
+(e)=>{
 
   e.preventDefault();
 
-  const taskText = taskInput.value;
+  const taskText =
+  taskInput.value.trim();
 
-  if(taskText === "") return;
+  if(taskText === "")
+  return;
+
+
 
   push(
 
-    ref(database, "tasks/" + currentUser.uid),
+    ref(
+      database,
+      "tasks/" + currentUser.uid
+    ),
 
     {
 
-      text: taskText
+      text: taskText,
+
+      completed: false
 
     }
 
   );
+
+
 
   taskInput.value = "";
 
 });
 
 
-// LOAD USER TASKS
+
+
+
+// LOAD TASKS
 function loadTasks(){
 
   onValue(
 
-    ref(database, "tasks/" + currentUser.uid),
+    ref(
+      database,
+      "tasks/" + currentUser.uid
+    ),
 
-    (snapshot) => {
+    (snapshot)=>{
 
       taskList.innerHTML = "";
 
+
+      let total = 0;
+
+      let completed = 0;
+
+      let pending = 0;
+
+
       const data = snapshot.val();
+
 
       if(data){
 
         for(let id in data){
 
-          const li = document.createElement("li");
+          total++;
+
+
+          if(data[id].completed){
+
+            completed++;
+
+          }
+
+          else{
+
+            pending++;
+
+          }
+
+
+
+          const li =
+          document.createElement("li");
+
+
+          li.classList.add("task-item");
+
 
           li.innerHTML = `
 
-            ${data[id].text}
+            <div class="task-left">
 
-            <button onclick="deleteTask('${id}')">
+              <input
+                type="checkbox"
+                ${data[id].completed ? "checked" : ""}
+                onchange="toggleTask('${id}', ${data[id].completed})"
+              >
+
+              <span class="
+              ${data[id].completed ? "completed-task" : ""}
+              ">
+
+                ${data[id].text}
+
+              </span>
+
+            </div>
+
+
+
+            <button
+            class="delete-task-btn"
+            onclick="deleteTask('${id}')">
+
               Delete
+
             </button>
 
           `;
+
 
           taskList.appendChild(li);
 
         }
 
       }
+
+
+
+      // UPDATE CARDS
+      taskCount.innerText =
+      total;
+
+      completedCount.innerText =
+      completed;
+
+      pendingCount.innerText =
+      pending;
 
     }
 
@@ -115,12 +234,48 @@ function loadTasks(){
 }
 
 
+
+
+
 // DELETE TASK
 window.deleteTask = function(id){
 
   remove(
 
-    ref(database, "tasks/" + currentUser.uid + "/" + id)
+    ref(
+      database,
+      "tasks/" +
+      currentUser.uid +
+      "/" +
+      id
+    )
+
+  );
+
+};
+
+
+
+
+// TOGGLE COMPLETE
+window.toggleTask =
+function(id, currentStatus){
+
+  update(
+
+    ref(
+      database,
+      "tasks/" +
+      currentUser.uid +
+      "/" +
+      id
+    ),
+
+    {
+
+      completed: !currentStatus
+
+    }
 
   );
 

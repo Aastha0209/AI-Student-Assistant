@@ -1,165 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
   <title>Dashboard</title>
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet"
+  href="css/style.css">
+
+  <!-- ICONS -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CHART.JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-  <div class="dashboard">
+<div class="dashboard">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
 
-      <h2>AI Assistant</h2>
+    <h2>
+      <i class="fa-solid fa-graduation-cap"></i>
+      AI Assistant
+    </h2>
 
-      <ul>
+    <ul>
 
-        <li>Dashboard</li>
+      <li>
+        <a href="dashboard.html"
+        class="active-link">
+          <i class="fa-solid fa-house"></i>
+          Dashboard
+        </a>
+      </li>
 
-        <li>Attendance</li>
+      <li>
+        <a href="attendance.html">
+          <i class="fa-solid fa-calendar-check"></i>
+          Attendance
+        </a>
+      </li>
 
-        <li>Notes</li>
+      <li>
+        <a href="notes.html">
+          <i class="fa-solid fa-book"></i>
+          Notes
+        </a>
+      </li>
 
-        <li>Tasks</li>
+      <li>
+        <a href="tasks.html">
+          <i class="fa-solid fa-list-check"></i>
+          Tasks
+        </a>
+      </li>
 
-        <li>Timetable</li>
+      <li>
+        <a href="timetable.html">
+          <i class="fa-solid fa-table"></i>
+          Timetable
+        </a>
+      </li>
 
-        <li>Profile</li>
+      <li>
+        <a href="profile.html">
+          <i class="fa-solid fa-user"></i>
+          Profile
+        </a>
+      </li>
 
-        <li>
-          <button id="logout-btn">
-            Logout
-          </button>
-        </li>
+      <li>
 
-      </ul>
+        <button id="logout-btn">
+
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+
+        </button>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+      <div>
+
+        <h1>
+          Student Dashboard
+        </h1>
+
+        <p class="welcome-text">
+          Welcome back 👋 Stay productive today
+        </p>
+
+      </div>
 
     </div>
 
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
 
-      <div class="topbar">
+    <!-- DASHBOARD CARDS -->
+    <div class="cards">
 
-        <h1>Student Dashboard</h1>
+      <!-- ATTENDANCE -->
+      <div class="dashboard-card attendance-card">
 
-      </div>
-
-
-      <!-- CARDS -->
-      <div class="cards">
-
-        <div class="dashboard-card">
-
-          <h3>Attendance</h3>
-
-          <p>85%</p>
-
+        <div class="card-icon">
+          <i class="fa-solid fa-chart-line"></i>
         </div>
 
+        <h3>
+          Attendance
+        </h3>
 
-        <div class="dashboard-card">
+        <p id="dashboard-attendance">
 
-          <h3>Pending Tasks</h3>
+          0%
 
-          <p>4 Tasks</p>
+        </p>
 
+      </div>
+
+
+
+      <!-- TASKS -->
+      <div class="dashboard-card task-card">
+
+        <div class="card-icon">
+          <i class="fa-solid fa-list-check"></i>
         </div>
 
+        <h3>
+          Pending Tasks
+        </h3>
 
-        <div class="dashboard-card">
+        <p id="dashboard-task-count">
 
-          <h3>Uploaded Notes</h3>
+          0 Tasks
 
-          <p>12 Files</p>
+        </p>
 
+      </div>
+
+
+
+      <!-- NOTES -->
+      <div class="dashboard-card notes-card">
+
+        <div class="card-icon">
+          <i class="fa-solid fa-book-open"></i>
         </div>
 
-      </div>
+        <h3>
+          Uploaded Notes
+        </h3>
 
+        <p id="dashboard-notes-count">
 
-      <!-- TASK MANAGER -->
-      <div class="task-section">
+          0 Files
 
-        <h2>Task Manager</h2>
-
-        <form id="task-form">
-
-          <input
-            type="text"
-            id="task-input"
-            placeholder="Enter Task"
-            required
-          >
-
-          <button type="submit">
-            Add Task
-          </button>
-
-        </form>
-
-        <ul id="task-list"></ul>
+        </p>
 
       </div>
 
+    </div>
 
-      <!-- ATTENDANCE TRACKER -->
-      <div class="task-section">
 
-        <h2>Attendance Tracker</h2>
 
-        <form id="attendance-form">
+    <!-- CHART SECTION -->
+    <!-- CHART SECTION -->
 
-          <input
-            type="text"
-            id="subject-name"
-            placeholder="Subject Name"
-            required
-          >
+<div class="chart-section">
 
-          <input
-            type="number"
-            id="attended"
-            placeholder="Attended"
-            required
-          >
+  <h2>
 
-          <input
-            type="number"
-            id="total"
-            placeholder="Total Lectures"
-            required
-          >
+    <i class="fa-solid fa-chart-simple"></i>
 
-          <button type="submit">
-            Add Attendance
-          </button>
+    Analytics Overview
 
-        </form>
+  </h2>
 
-        <ul id="attendance-list"></ul>
+  <div class="charts-container">
 
-      </div>
+    <div class="chart-box">
+
+      <canvas id="attendanceChart"></canvas>
+
+    </div>
+
+    <div class="chart-box">
+
+      <canvas id="taskChart"></canvas>
 
     </div>
 
   </div>
 
+</div>
+<!-- DASHBOARD CARDS -->
+<div class="cards">
+...
+</div>
 
-  <!-- TASK SCRIPT -->
-  <script type="module" src="js/tasks.js"></script>
+<!-- CHART SECTION -->
+<div class="chart-section">
+...
+</div>
 
-  <!-- LOGOUT SCRIPT -->
-  <script type="module" src="js/logout.js"></script>
+<!-- ADD HERE -->
+<div class="task-section">
 
-  <!-- ATTENDANCE SCRIPT -->
-  <script type="module" src="js/attendance.js"></script>
+  <h2>
+    <i class="fa-solid fa-bolt"></i>
+    Quick Actions
+  </h2>
+
+  <div class="quick-actions">
+
+    <a href="notes.html" class="action-btn">
+      📚 Upload Notes
+    </a>
+
+    <a href="tasks.html" class="action-btn">
+      ✅ Manage Tasks
+    </a>
+
+    <a href="attendance.html" class="action-btn">
+      📊 Attendance
+    </a>
+
+    <a href="profile.html" class="action-btn">
+      👤 Profile
+    </a>
+
+  </div>
+
+</div>
+
+<!-- TASK SECTION -->
+<div class="task-section">
+
+  <h2>
+    <i class="fa-solid fa-list-check"></i>
+    Task Manager
+  </h2>
+
+...
+    
+
+
+    <!-- TASK SECTION -->
+    <div class="task-section">
+
+      <h2>
+        <i class="fa-solid fa-list-check"></i>
+        Task Manager
+      </h2>
+
+      <form id="task-form">
+
+        <input
+          type="text"
+          id="task-input"
+          placeholder="Enter Task"
+          required
+        >
+
+        <button type="submit">
+
+          Add Task
+
+        </button>
+
+      </form>
+
+      <ul id="task-list"></ul>
+
+    </div>
+
+
+
+    <!-- ATTENDANCE SECTION -->
+    <div class="task-section">
+
+      <h2>
+        <i class="fa-solid fa-calendar-check"></i>
+        Attendance Tracker
+      </h2>
+
+      <form id="attendance-form">
+
+        <input
+          type="text"
+          id="subject-name"
+          placeholder="Subject Name"
+          required
+        >
+
+        <input
+          type="number"
+          id="attended"
+          placeholder="Attended"
+          required
+        >
+
+        <input
+          type="number"
+          id="total"
+          placeholder="Total Lectures"
+          required
+        >
+
+        <button type="submit">
+
+          Add Attendance
+
+        </button>
+
+      </form>
+
+      <ul id="attendance-list"></ul>
+
+    </div>
+
+
+
+    <!-- AI CHATBOT -->
+    <div class="task-section">
+
+      <h2>
+        <i class="fa-solid fa-robot"></i>
+        AI Study Assistant
+      </h2>
+
+      <div id="chat-container">
+
+        <div class="bot-message">
+
+          Hello 👋 Ask me anything about studies.
+
+        </div>
+
+      </div>
+
+      <form id="chat-form">
+
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Ask AI something..."
+          required
+        >
+
+        <button type="submit">
+
+          Send
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- SCRIPTS -->
+
+<script type="module"
+src="js/tasks.js"></script>
+
+<script type="module"
+src="js/attendance.js"></script>
+
+<script type="module"
+src="js/chatbot.js"></script>
+
+<script type="module"
+src="js/dashboard.js"></script>
+
+<script type="module"
+src="js/logout.js"></script>
+
+
+
 
 </body>
+
 </html>

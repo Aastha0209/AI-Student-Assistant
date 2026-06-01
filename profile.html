@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1.0"/>
+
+  <title>Profile</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <h2>AI Assistant</h2>
+
+    <ul>
+
+      <li>
+        <a href="dashboard.html">
+          Dashboard
+        </a>
+      </li>
+
+      <li>
+        <a href="attendance.html">
+          Attendance
+        </a>
+      </li>
+
+      <li>
+        <a href="notes.html">
+          Notes
+        </a>
+      </li>
+
+      <li>
+        <a href="tasks.html">
+          Tasks
+        </a>
+      </li>
+
+      <li>
+        <a href="timetable.html">
+          Timetable
+        </a>
+      </li>
+
+      <li>
+        <a href="profile.html"
+        class="active-link">
+
+          Profile
+
+        </a>
+      </li>
+
+      <li>
+
+        <button id="logout-btn">
+
+          Logout
+
+        </button>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <div class="topbar">
+
+      <h1>
+
+        Student Profile
+
+      </h1>
+
+    </div>
+
+
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+
+
+      <!-- HEADER -->
+      <div class="profile-header">
+
+        <div
+        class="profile-avatar"
+        id="profile-avatar">
+
+          A
+
+        </div>
+
+
+        <div>
+
+          <h2 id="profile-name">
+
+            Loading...
+
+          </h2>
+
+          <p id="profile-email">
+
+            Loading...
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PROFILE INFO -->
+      <div class="profile-info">
+
+
+        <!-- COURSE -->
+        <div class="info-box">
+
+          <h3>
+
+            Course
+
+          </h3>
+
+          <p id="profile-course">
+
+            Loading...
+
+          </p>
+
+        </div>
+
+
+
+        <!-- COLLEGE -->
+        <div class="info-box">
+
+          <h3>
+
+            College
+
+          </h3>
+
+          <p id="profile-college">
+
+            Loading...
+
+          </p>
+
+        </div>
+
+
+
+        <!-- STATUS -->
+        <div class="info-box">
+
+          <h3>
+
+            Status
+
+          </h3>
+
+          <p>
+
+            Active Student
+
+          </p>
+
+        </div>
+
+
+
+        <!-- PROJECT -->
+        <div class="info-box">
+
+          <h3>
+
+            Project
+
+          </h3>
+
+          <p id="profile-project">
+
+            Loading...
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- EDIT PROFILE -->
+      <div class="edit-profile">
+
+        <h2>
+
+          Edit Profile
+
+        </h2>
+
+
+        <form id="profile-form">
+
+
+          <input
+            type="text"
+            id="username"
+            placeholder="Enter Name"
+            required
+          >
+
+
+          <input
+            type="text"
+            id="course"
+            placeholder="Enter Course"
+            required
+          >
+
+
+          <input
+            type="text"
+            id="college"
+            placeholder="Enter College"
+            required
+          >
+
+
+          <input
+            type="text"
+            id="project"
+            placeholder="Enter Project"
+            required
+          >
+
+
+          <button type="submit">
+
+            Save Profile
+
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- FIREBASE -->
+<script type="module">
+
+import {
+
+  auth,
+  database
+
+} from "./js/firebase-config.js";
+
+
+import {
+
+  onAuthStateChanged
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+
+  ref,
+  set,
+  get
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+// ELEMENTS
+const profileName =
+document.getElementById("profile-name");
+
+
+const profileEmail =
+document.getElementById("profile-email");
+
+
+const profileAvatar =
+document.getElementById("profile-avatar");
+
+
+const profileCourse =
+document.getElementById("profile-course");
+
+
+const profileCollege =
+document.getElementById("profile-college");
+
+
+const profileProject =
+document.getElementById("profile-project");
+
+
+const profileForm =
+document.getElementById("profile-form");
+
+
+const usernameInput =
+document.getElementById("username");
+
+
+const courseInput =
+document.getElementById("course");
+
+
+const collegeInput =
+document.getElementById("college");
+
+
+const projectInput =
+document.getElementById("project");
+
+
+
+
+// AUTH CHECK
+onAuthStateChanged(auth, async(user)=>{
+
+  if(user){
+
+    const uid = user.uid;
+
+
+    // EMAIL
+    profileEmail.innerText =
+    user.email;
+
+
+
+    // GET DATA
+    const snapshot = await get(
+
+      ref(database, "users/" + uid)
+
+    );
+
+
+
+    if(snapshot.exists()){
+
+      const data = snapshot.val();
+
+
+
+      // NAME
+      profileName.innerText =
+      data.name || "Student";
+
+
+
+      // COURSE
+      profileCourse.innerText =
+      data.course || "Not Added";
+
+
+
+      // COLLEGE
+      profileCollege.innerText =
+      data.college || "Not Added";
+
+
+
+      // PROJECT
+      profileProject.innerText =
+      data.project || "Not Added";
+
+
+
+      // INPUT VALUES
+      usernameInput.value =
+      data.name || "";
+
+
+      courseInput.value =
+      data.course || "";
+
+
+      collegeInput.value =
+      data.college || "";
+
+
+      projectInput.value =
+      data.project || "";
+
+
+
+      // PROFILE LETTER
+      profileAvatar.innerText =
+
+      data.name
+
+      ? data.name.charAt(0)
+      .toUpperCase()
+
+      : "S";
+
+    }
+
+
+    else{
+
+      profileName.innerText =
+      "Student";
+
+
+      profileCourse.innerText =
+      "Not Added";
+
+
+      profileCollege.innerText =
+      "Not Added";
+
+
+      profileProject.innerText =
+      "Not Added";
+
+
+      profileAvatar.innerText =
+      "S";
+
+    }
+
+
+
+    // SAVE PROFILE
+    profileForm.addEventListener(
+
+      "submit",
+
+      async(e)=>{
+
+      e.preventDefault();
+
+
+
+      await set(
+
+        ref(database, "users/" + uid),
+
+        {
+
+          name:
+          usernameInput.value,
+
+
+          course:
+          courseInput.value,
+
+
+          college:
+          collegeInput.value,
+
+
+          project:
+          projectInput.value,
+
+
+          email:
+          user.email
+
+        }
+
+      );
+
+
+
+      alert(
+
+        "Profile Updated Successfully"
+
+      );
+
+
+
+      location.reload();
+
+    });
+
+  }
+
+
+
+  else{
+
+    window.location.href =
+    "login.html";
+
+  }
+
+});
+
+</script>
+
+
+
+
+<!-- LOGOUT -->
+<script type="module"
+src="js/logout.js"></script>
+
+</body>
+</html>

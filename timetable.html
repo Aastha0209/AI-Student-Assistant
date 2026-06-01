@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+  <title>Timetable</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <h2>AI Assistant</h2>
+
+    <ul>
+
+      <li>
+        <a href="dashboard.html">Dashboard</a>
+      </li>
+
+      <li>
+        <a href="attendance.html" >Attendance</a>
+      </li>
+
+      <li>
+        <a href="notes.html">Notes</a>
+      </li>
+
+      <li>
+        <a href="tasks.html">Tasks</a>
+      </li>
+
+      <li>
+        <a href="timetable.html" class="active-link">Timetable</a>
+      </li>
+
+      <li>
+        <a href="profile.html">Profile</a>
+      </li>
+
+      <li>
+        <button id="logout-btn">
+          Logout
+        </button>
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <div class="topbar">
+
+      <h1>Weekly Timetable</h1>
+
+    </div>
+
+
+    <!-- ADD SUBJECT -->
+    <div class="task-section">
+
+      <h2>Add Lecture</h2>
+
+      <form id="timetable-form">
+
+        <select id="day" required>
+
+          <option value="">
+            Select Day
+          </option>
+
+          <option>Monday</option>
+
+          <option>Tuesday</option>
+
+          <option>Wednesday</option>
+
+          <option>Thursday</option>
+
+          <option>Friday</option>
+
+          <option>Saturday</option>
+
+        </select>
+
+
+        <input
+          type="text"
+          id="subject"
+          placeholder="Subject Name"
+          required
+        >
+
+
+        <input
+          type="time"
+          id="time"
+          required
+        >
+
+
+        <button type="submit">
+          Add
+        </button>
+
+      </form>
+
+    </div>
+
+
+    <!-- TIMETABLE -->
+    <div class="task-section">
+
+      <h2>Class Schedule</h2>
+
+      <table class="timetable-table">
+
+        <thead>
+
+          <tr>
+
+            <th>Day</th>
+
+            <th>Subject</th>
+
+            <th>Time</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="timetable-body">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const form = document.getElementById("timetable-form");
+
+const timetableBody =
+document.getElementById("timetable-body");
+
+
+// LOAD SAVED DATA
+window.onload = function(){
+
+  const saved =
+  JSON.parse(localStorage.getItem("timetable")) || [];
+
+  saved.forEach(item => {
+
+    addRow(
+      item.day,
+      item.subject,
+      item.time
+    );
+
+  });
+
+};
+
+
+// ADD SUBJECT
+form.addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  const day =
+  document.getElementById("day").value;
+
+  const subject =
+  document.getElementById("subject").value;
+
+  const time =
+  document.getElementById("time").value;
+
+  addRow(day, subject, time);
+
+  saveData();
+
+  form.reset();
+
+});
+
+
+// ADD ROW
+function addRow(day, subject, time){
+
+  const row =
+  document.createElement("tr");
+
+  row.innerHTML = `
+
+    <td>${day}</td>
+
+    <td>${subject}</td>
+
+    <td>${time}</td>
+
+    <td>
+
+      <button class="delete-btn">
+        Delete
+      </button>
+
+    </td>
+
+  `;
+
+  row.querySelector(".delete-btn")
+  .addEventListener("click", function(){
+
+    row.remove();
+
+    saveData();
+
+  });
+
+  timetableBody.appendChild(row);
+
+}
+
+
+// SAVE DATA
+function saveData(){
+
+  const rows =
+  timetableBody.querySelectorAll("tr");
+
+  let timetable = [];
+
+  rows.forEach(row => {
+
+    const cells = row.querySelectorAll("td");
+
+    timetable.push({
+
+      day: cells[0].innerText,
+
+      subject: cells[1].innerText,
+
+      time: cells[2].innerText
+
+    });
+
+  });
+
+  localStorage.setItem(
+    "timetable",
+    JSON.stringify(timetable)
+  );
+
+}
+
+</script>
+
+
+<script type="module"
+src="js/logout.js"></script>
+
+</body>
+</html>

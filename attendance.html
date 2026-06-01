@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+  <title>Attendance</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <h2>AI Assistant</h2>
+
+    <ul>
+
+      <li><a href="dashboard.html">Dashboard</a></li>
+
+      <li><a href="attendance.html" class="active-link">Attendance</a></li>
+
+      <li><a href="notes.html">Notes</a></li>
+
+      <li><a href="tasks.html">Tasks</a></li>
+
+      <li><a href="timetable.html">Timetable</a></li>
+
+      <li><a href="profile.html">Profile</a></li>
+
+      <li>
+        <button id="logout-btn">
+          Logout
+        </button>
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <div class="topbar">
+
+      <h1>Attendance Tracker</h1>
+
+    </div>
+
+
+    <div class="cards">
+
+      <div class="dashboard-card">
+
+  <h3>Average Attendance</h3>
+
+  <p id="average-attendance">
+
+    0%
+
+  </p>
+
+</div>
+
+    </div>
+
+
+    <div class="task-section">
+
+      <h2>Add Attendance</h2>
+
+      <form id="attendance-form">
+
+        <input
+          type="text"
+          id="subject-name"
+          placeholder="Subject Name"
+          required
+        >
+
+        <input
+          type="number"
+          id="attended"
+          placeholder="Attended"
+          required
+        >
+
+        <input
+          type="number"
+          id="total"
+          placeholder="Total"
+          required
+        >
+
+        <button type="submit">
+          Add Attendance
+        </button>
+
+      </form>
+
+      <ul id="attendance-list"></ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module"
+src="js/attendance.js"></script>
+
+<script type="module"
+src="js/logout.js"></script>
+
+</body>
+</html>

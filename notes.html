@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+  <title>Notes</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <h2>AI Assistant</h2>
+
+    <ul>
+
+      <li>
+        <a href="dashboard.html">
+          Dashboard
+        </a>
+      </li>
+
+      <li>
+        <a href="attendance.html">
+          Attendance
+        </a>
+      </li>
+
+      <li>
+        <a href="notes.html"
+        class="active-link">
+
+          Notes
+
+        </a>
+      </li>
+
+      <li>
+        <a href="tasks.html">
+          Tasks
+        </a>
+      </li>
+
+      <li>
+        <a href="timetable.html">
+          Timetable
+        </a>
+      </li>
+
+      <li>
+        <a href="profile.html">
+          Profile
+        </a>
+      </li>
+
+      <li>
+
+        <button id="logout-btn">
+
+          Logout
+
+        </button>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+
+
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+      <h1>
+
+        Study Notes
+
+      </h1>
+
+    </div>
+
+
+
+    <!-- NOTES CARD -->
+    <div class="cards">
+
+      <div class="dashboard-card">
+
+        <h3>
+
+          Total Notes
+
+        </h3>
+
+        <p id="notes-count">
+
+          0
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+
+    <!-- UPLOAD SECTION -->
+    <div class="task-section">
+
+      <h2>
+
+        Upload Notes
+
+      </h2>
+
+
+      <form id="notes-form">
+
+        <input
+          type="file"
+          id="note-file"
+          required
+        >
+
+
+        <button type="submit">
+
+          Upload
+
+        </button>
+
+      </form>
+
+    </div>
+
+
+
+
+    <!-- NOTES LIST -->
+    <div class="task-section">
+
+      <h2>
+
+        Recent Notes
+
+      </h2>
+
+
+      <ul id="notes-list"></ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<!-- FIREBASE NOTES SCRIPT -->
+<script type="module">
+
+import {
+
+  database,
+  auth
+
+} from "./js/firebase-config.js";
+
+
+import {
+
+  ref,
+  push,
+  onValue,
+  remove
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+import {
+
+  onAuthStateChanged
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+// ELEMENTS
+const notesForm =
+document.getElementById("notes-form");
+
+
+const noteFile =
+document.getElementById("note-file");
+
+
+const notesList =
+document.getElementById("notes-list");
+
+
+const notesCount =
+document.getElementById("notes-count");
+
+
+
+let currentUser = null;
+
+
+
+
+
+// CHECK USER
+onAuthStateChanged(auth, (user)=>{
+
+  if(user){
+
+    currentUser = user;
+
+    loadNotes();
+
+  }
+
+  else{
+
+    window.location.href =
+    "login.html";
+
+  }
+
+});
+
+
+
+
+
+
+
+// UPLOAD NOTE
+notesForm.addEventListener(
+
+"submit",
+
+(e)=>{
+
+  e.preventDefault();
+
+
+  const file =
+  noteFile.files[0];
+
+
+  if(!file) return;
+
+
+
+  push(
+
+    ref(
+      database,
+      "notes/" + currentUser.uid
+    ),
+
+    {
+
+      fileName:
+      file.name
+
+    }
+
+  );
+
+
+
+  notesForm.reset();
+
+});
+
+
+
+
+
+
+
+
+// LOAD NOTES
+function loadNotes(){
+
+  onValue(
+
+    ref(
+      database,
+      "notes/" + currentUser.uid
+    ),
+
+    (snapshot)=>{
+
+      notesList.innerHTML = "";
+
+
+      let totalNotes = 0;
+
+
+      const data =
+      snapshot.val();
+
+
+
+      if(data){
+
+        totalNotes =
+        Object.keys(data).length;
+
+
+
+        for(let id in data){
+
+          const li =
+          document.createElement("li");
+
+
+          li.classList.add(
+            "note-item"
+          );
+
+
+
+          li.innerHTML = `
+
+            <div class="task-left">
+
+              <span>
+
+                📄 ${data[id].fileName}
+
+              </span>
+
+            </div>
+
+
+
+            <button
+            class="delete-note"
+            onclick="deleteNote('${id}')">
+
+              Delete
+
+            </button>
+
+          `;
+
+
+
+          notesList.appendChild(li);
+
+        }
+
+      }
+
+
+
+      // UPDATE CARD
+      notesCount.innerText =
+      totalNotes;
+
+    }
+
+  );
+
+}
+
+
+
+
+
+
+
+
+// DELETE NOTE
+window.deleteNote =
+function(id){
+
+  remove(
+
+    ref(
+      database,
+      "notes/" +
+      currentUser.uid +
+      "/" +
+      id
+    )
+
+  );
+
+};
+
+</script>
+
+
+
+
+
+<!-- LOGOUT -->
+<script type="module"
+src="js/logout.js"></script>
+
+</body>
+</html>

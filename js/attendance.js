@@ -19,9 +19,15 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const attendanceForm = document.querySelector("#attendance-form");
+// ELEMENTS
+const attendanceForm =
+document.querySelector("#attendance-form");
 
-const attendanceList = document.querySelector("#attendance-list");
+const attendanceList =
+document.querySelector("#attendance-list");
+
+const averageAttendance =
+document.querySelector("#average-attendance");
 
 
 let currentUser = null;
@@ -38,25 +44,50 @@ onAuthStateChanged(auth, (user) => {
 
   }
 
+  else{
+
+    window.location.href =
+    "login.html";
+
+  }
+
 });
 
 
 // ADD ATTENDANCE
-attendanceForm.addEventListener("submit", (e) => {
+attendanceForm.addEventListener(
+  "submit",
+  (e) => {
 
   e.preventDefault();
 
-  const subject = document.querySelector("#subject-name").value;
+  const subject =
+  document.querySelector(
+    "#subject-name"
+  ).value;
 
-  const attended = document.querySelector("#attended").value;
+  const attended =
+  document.querySelector(
+    "#attended"
+  ).value;
 
-  const total = document.querySelector("#total").value;
+  const total =
+  document.querySelector(
+    "#total"
+  ).value;
 
-  const percentage = ((attended / total) * 100).toFixed(1);
+
+  const percentage = (
+    (attended / total) * 100
+  ).toFixed(1);
+
 
   push(
 
-    ref(database, "attendance/" + currentUser.uid),
+    ref(
+      database,
+      "attendance/" + currentUser.uid
+    ),
 
     {
 
@@ -82,7 +113,10 @@ function loadAttendance(){
 
   onValue(
 
-    ref(database, "attendance/" + currentUser.uid),
+    ref(
+      database,
+      "attendance/" + currentUser.uid
+    ),
 
     (snapshot) => {
 
@@ -90,19 +124,36 @@ function loadAttendance(){
 
       const data = snapshot.val();
 
+      let totalPercentage = 0;
+
+      let subjectCount = 0;
+
+
       if(data){
 
         for(let id in data){
 
           const item = data[id];
 
-          const li = document.createElement("li");
+          totalPercentage +=
+          parseFloat(item.percentage);
+
+          subjectCount++;
+
+
+          const li =
+          document.createElement("li");
+
 
           li.innerHTML = `
 
             <div>
 
-              <strong>${item.subject}</strong>
+              <strong>
+
+                ${item.subject}
+
+              </strong>
 
               <br>
 
@@ -117,7 +168,9 @@ function loadAttendance(){
             </div>
 
             <button onclick="deleteAttendance('${id}')">
+
               Delete
+
             </button>
 
           `;
@@ -127,6 +180,23 @@ function loadAttendance(){
         }
 
       }
+
+
+      // CALCULATE AVERAGE
+      let average = 0;
+
+      if(subjectCount > 0){
+
+        average =
+        (
+          totalPercentage / subjectCount
+        ).toFixed(1);
+
+      }
+
+
+      averageAttendance.innerText =
+      average + "%";
 
     }
 
@@ -144,7 +214,10 @@ window.deleteAttendance = function(id){
 
       database,
 
-      "attendance/" + currentUser.uid + "/" + id
+      "attendance/" +
+      currentUser.uid +
+      "/" +
+      id
 
     )
 
