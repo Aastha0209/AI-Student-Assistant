@@ -1257,3 +1257,117 @@ button:hover{
   0 10px 20px rgba(37,99,235,0.35);
 
 }
+.charts-container{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(350px,1fr));
+
+  gap:25px;
+
+}
+
+.chart-box{
+
+  background:rgba(255,255,255,0.05);
+
+  border-radius:20px;
+
+  padding:20px;
+
+}
+
+table{
+
+  width:100%;
+
+  border-collapse:collapse;
+
+}
+
+th,
+td{
+
+  padding:15px;
+
+  text-align:left;
+
+}
+
+th{
+
+  color:#60a5fa;
+
+}
+
+tr{
+
+  border-bottom:
+  1px solid rgba(255,255,255,0.08);
+
+}
+.notification-toast{
+
+  position:fixed;
+
+  top:20px;
+
+  right:20px;
+
+  background:#2563eb;
+
+  color:white;
+
+  padding:15px 20px;
+
+  border-radius:12px;
+
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+
+  z-index:9999;
+
+  font-weight:600;
+
+  animation:slideIn 0.4s ease;
+
+}
+
+@keyframes slideIn{
+
+  from{
+
+    opacity:0;
+    transform:translateX(100%);
+
+  }
+
+  to{
+
+    opacity:1;
+    transform:translateX(0);
+
+  }
+
+}
+.notification-toast{
+
+  position: fixed;
+
+  top: 20px;
+
+  right: 20px;
+
+  background: #2563eb;
+
+  color: white;
+
+  padding: 15px 20px;
+
+  border-radius: 10px;
+
+  z-index: 9999;
+
+  font-weight: bold;
+
+}

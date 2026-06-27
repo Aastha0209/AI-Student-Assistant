@@ -41,6 +41,11 @@ document.getElementById(
   "dashboard-attendance"
 );
 
+const announcementList =
+document.getElementById(
+  "announcement-list"
+);
+
 
 
 // CHART VARIABLES
@@ -48,6 +53,31 @@ document.getElementById(
 let attendanceChart;
 
 let taskChart;
+
+let lastAnnouncementId = null;
+
+function showNotification(message){
+
+  const notification =
+  document.createElement("div");
+
+  notification.className =
+  "notification-toast";
+
+  notification.innerHTML =
+  `📢 ${message}`;
+
+  document.body.appendChild(
+    notification
+  );
+
+  setTimeout(()=>{
+
+    notification.remove();
+
+  },5000);
+
+}
 
 
 
@@ -398,5 +428,81 @@ onAuthStateChanged(auth,(user)=>{
     }
 
   );
+  // ANNOUNCEMENTS
+
+onValue(
+
+  ref(database,"announcements"),
+
+  (snapshot)=>{
+
+    const announcementList =
+    document.getElementById(
+      "announcement-list"
+    );
+
+    if(!announcementList)
+    return;
+
+    announcementList.innerHTML = "";
+
+    if(!snapshot.exists())
+    return;
+
+    const data =
+    snapshot.val();
+
+    const announcements =
+    Object.entries(data).reverse();
+
+    announcements.forEach(([id,item])=>{
+
+      const li =
+      document.createElement("li");
+
+      li.innerHTML = `
+
+        <strong>
+          Announcement
+        </strong>
+
+        <br>
+
+        ${item.message}
+
+      `;
+
+      announcementList.appendChild(
+        li
+      );
+
+    });
+
+    const latestId =
+    announcements[0][0];
+
+    const latestMessage =
+    announcements[0][1].message;
+
+    if(
+
+      lastAnnouncementId &&
+      lastAnnouncementId !== latestId
+
+    ){
+
+      showNotification(
+        latestMessage
+      );
+
+    }
+
+    lastAnnouncementId =
+    latestId;
+
+  }
+
+);
+  
 
 });

@@ -1,12 +1,20 @@
-import { auth } from "./firebase-config.js";
+import { auth, database } from "./firebase-config.js";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  ref,
+  set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+
+// ====================
 // SIGNUP
+// ====================
+
 const signupForm = document.querySelector("#signup-form");
 
 if (signupForm) {
@@ -15,32 +23,58 @@ if (signupForm) {
 
     e.preventDefault();
 
-    const email = signupForm.email.value;
+    const fullname =
+      signupForm.querySelector('input[type="text"]').value;
 
-    const password = signupForm.password.value;
+    const email =
+      signupForm.email.value;
 
-    createUserWithEmailAndPassword(auth, email, password)
+    const password =
+      signupForm.password.value;
 
-      .then(() => {
+    createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    )
 
-        alert("Signup Successful");
+    .then(async (userCredential) => {
 
-        window.location.href = "login.html";
+  const user = userCredential.user;
 
-      })
+  await set(
+    ref(database, "users/" + user.uid),
+    {
+      name: fullname,
+      email: email,
+      role: email === "admin@gmail.com"
+        ? "admin"
+        : "student"
+    }
+  );
 
-      .catch((error) => {
+  alert("Signup Successful");
 
-        alert(error.message);
+  window.location.href = "login.html";
 
-      });
+})
+
+    .catch((error) => {
+
+      alert(error.message);
+
+    });
 
   });
 
 }
 
 
+
+// ====================
 // LOGIN
+// ====================
+
 const loginForm = document.querySelector("#login-form");
 
 if (loginForm) {
@@ -49,25 +83,48 @@ if (loginForm) {
 
     e.preventDefault();
 
-    const email = loginForm.email.value;
+    const email =
+      loginForm.email.value;
 
-    const password = loginForm.password.value;
+    const password =
+      loginForm.password.value;
 
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    )
 
-      .then(() => {
+    .then((userCredential) => {
 
-        alert("Login Successful");
+      const user =
+        userCredential.user;
 
-        window.location.href = "dashboard.html";
+      alert("Login Successful");
 
-      })
+      // ADMIN LOGIN
+      if(user.email === "admin@gmail.com"){
 
-      .catch((error) => {
+        window.location.href =
+        "admin.html";
 
-        alert(error.message);
+      }
 
-      });
+      // STUDENT LOGIN
+      else{
+
+        window.location.href =
+        "dashboard.html";
+
+      }
+
+    })
+
+    .catch((error) => {
+
+      alert(error.message);
+
+    });
 
   });
 

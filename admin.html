@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard</title>
+
+  <link rel="stylesheet"
+        href="css/style.css">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <h2>
+
+      <i class="fa-solid fa-user-shield"></i>
+
+      Admin Panel
+
+    </h2>
+
+    <ul>
+
+      <li>
+
+        <a href="admin.html"
+           class="active-link">
+
+          <i class="fa-solid fa-chart-line"></i>
+
+          Dashboard
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="dashboard.html">
+
+          <i class="fa-solid fa-house"></i>
+
+          Student Dashboard
+
+        </a>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+      <div>
+
+        <h1>
+
+          Admin Dashboard
+
+        </h1>
+
+        <p>
+
+          Monitor all student activities
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- ANALYTICS CARDS -->
+    <div class="cards">
+
+      <div class="dashboard-card">
+
+        <h3>
+
+          Total Users
+
+        </h3>
+
+        <p id="total-users">
+
+          0
+
+        </p>
+
+      </div>
+
+      <div class="dashboard-card">
+
+        <h3>
+
+          Total Tasks
+
+        </h3>
+
+        <p id="total-tasks">
+
+          0
+
+        </p>
+
+      </div>
+
+      <div class="dashboard-card">
+
+        <h3>
+
+          Total Notes
+
+        </h3>
+
+        <p id="total-notes">
+
+          0
+
+        </p>
+
+      </div>
+
+      <div class="dashboard-card">
+
+        <h3>
+
+          Total Attendance
+
+        </h3>
+
+        <p id="total-attendance">
+
+          0
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- EXTRA CARDS -->
+    <div class="cards">
+
+      <div class="dashboard-card">
+
+        <h3>
+
+          Most Active Student
+
+        </h3>
+
+        <p id="active-student">
+
+          Loading...
+
+        </p>
+
+      </div>
+
+      <div class="dashboard-card">
+
+        <h3>
+
+          Last Registered User
+
+        </h3>
+
+        <p id="last-user">
+
+          Loading...
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- CHARTS -->
+    <div class="task-section">
+
+      <h2>
+
+        <i class="fa-solid fa-chart-pie"></i>
+
+        Platform Analytics
+
+      </h2>
+
+      <div class="charts-container">
+
+        <div class="chart-box">
+
+          <canvas id="usersChart"></canvas>
+
+        </div>
+
+        <div class="chart-box">
+
+          <canvas id="activityChart"></canvas>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- ANNOUNCEMENTS SECTION -->
+<div class="task-section">
+
+  <h2>
+
+    <i class="fa-solid fa-bullhorn"></i>
+
+    Announcements
+
+  </h2>
+
+  <form id="announcement-form">
+
+    <input
+      type="text"
+      id="announcement-input"
+      placeholder="Write announcement..."
+      required
+    >
+
+    <button type="submit">
+
+      Post Announcement
+
+    </button>
+
+  </form>
+
+  <ul id="announcement-list"></ul>
+
+</div>
+
+    <!-- USERS SECTION -->
+    <div class="task-section">
+
+      <h2>
+
+        <i class="fa-solid fa-users"></i>
+
+        Registered Users
+
+      </h2>
+
+      <!-- SEARCH BAR -->
+      <input
+        type="text"
+        id="search-user"
+        placeholder="Search user by name or email..."
+        class="search-input"
+      >
+
+      <br><br>
+
+      <table class="timetable-table">
+
+        <thead>
+
+          <tr>
+
+            <th>Name</th>
+
+            <th>Email</th>
+
+            <th>Course</th>
+
+            <th>College</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="users-table">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module"
+        src="js/admin.js"></script>
+
+</body>
+
+</html>

@@ -1,55 +1,397 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Student Assistant</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Student Assistant</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#0f172a;
+color:white;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+background:#2563eb;
+filter:blur(180px);
+top:-200px;
+left:-150px;
+opacity:.35;
+z-index:-1;
+}
+
+body::after{
+content:"";
+position:fixed;
+width:450px;
+height:450px;
+background:#7c3aed;
+filter:blur(180px);
+bottom:-200px;
+right:-150px;
+opacity:.25;
+z-index:-1;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 8%;
+backdrop-filter:blur(10px);
+}
+
+.logo{
+font-size:1.6rem;
+font-weight:bold;
+color:#60a5fa;
+}
+
+.nav-buttons a{
+text-decoration:none;
+margin-left:12px;
+padding:10px 18px;
+border-radius:10px;
+font-weight:600;
+}
+
+.login-btn{
+background:transparent;
+border:1px solid #3b82f6;
+color:white;
+}
+
+.signup-btn{
+background:#2563eb;
+color:white;
+}
+
+.hero{
+min-height:90vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+}
+
+.hero-content{
+max-width:900px;
+}
+
+.hero h1{
+font-size:4rem;
+margin-bottom:20px;
+line-height:1.2;
+}
+
+.hero h1 span{
+color:#60a5fa;
+}
+
+.hero p{
+font-size:1.2rem;
+color:#cbd5e1;
+margin-bottom:35px;
+line-height:1.8;
+}
+
+.hero-buttons a{
+display:inline-block;
+margin:10px;
+padding:14px 30px;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.primary-btn{
+background:#2563eb;
+color:white;
+}
+
+.secondary-btn{
+border:1px solid #475569;
+color:white;
+}
+
+.hero-buttons a:hover{
+transform:translateY(-4px);
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:50px 8%;
+}
+
+.stat-card{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.1);
+padding:30px;
+border-radius:20px;
+text-align:center;
+}
+
+.stat-card h2{
+color:#60a5fa;
+font-size:2rem;
+margin-bottom:10px;
+}
+
+.features{
+padding:80px 8%;
+}
+
+.section-title{
+text-align:center;
+font-size:2.5rem;
+margin-bottom:50px;
+}
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.feature-card{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.1);
+padding:30px;
+border-radius:20px;
+transition:.3s;
+}
+
+.feature-card:hover{
+transform:translateY(-8px);
+border-color:#3b82f6;
+}
+
+.feature-card i{
+font-size:2rem;
+color:#60a5fa;
+margin-bottom:15px;
+}
+
+.feature-card h3{
+margin-bottom:12px;
+}
+
+.feature-card p{
+color:#cbd5e1;
+line-height:1.6;
+}
+
+.cta{
+padding:100px 20px;
+text-align:center;
+}
+
+.cta h2{
+font-size:2.5rem;
+margin-bottom:20px;
+}
+
+.cta p{
+color:#cbd5e1;
+margin-bottom:30px;
+}
+
+.cta a{
+display:inline-block;
+padding:15px 35px;
+background:#2563eb;
+border-radius:12px;
+text-decoration:none;
+color:white;
+font-weight:bold;
+}
+
+footer{
+text-align:center;
+padding:30px;
+border-top:1px solid rgba(255,255,255,.1);
+color:#94a3b8;
+margin-top:40px;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:2.5rem;
+}
+
+.hero p{
+font-size:1rem;
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-  <nav class="navbar">
-    <h1>AI Student Assistant</h1>
+<nav>
 
-    <div>
-      <a href="login.html">Login</a>
-      <a href="signup.html" class="btn">Signup</a>
-    </div>
-  </nav>
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+AI Student Assistant
+</div>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h2>Your Smart Academic Companion</h2>
+<div class="nav-buttons">
+<a href="login.html" class="login-btn">Login</a>
+<a href="signup.html" class="signup-btn">Signup</a>
+</div>
 
-      <p>
-        Manage attendance, notes, tasks, timetable and more
-        with AI powered student assistance.
-      </p>
+</nav>
 
-      <a href="signup.html" class="hero-btn">
-        Get Started
-      </a>
-    </div>
-  </section>
+<section class="hero">
 
-  <section class="features">
+<div class="hero-content">
 
-    <div class="card">
-      <h3>Attendance Tracker</h3>
-      <p>Track your daily attendance easily.</p>
-    </div>
+<h1>
+Smart <span>Academic Management</span>
+for Modern Students
+</h1>
 
-    <div class="card">
-      <h3>Notes Manager</h3>
-      <p>Upload and organize notes securely.</p>
-    </div>
+<p>
+Track attendance, manage tasks, upload notes,
+receive announcements, and use an AI Study Assistant —
+all from one platform.
+</p>
 
-    <div class="card">
-      <h3>Task Planner</h3>
-      <p>Manage assignments and deadlines.</p>
-    </div>
+<div class="hero-buttons">
 
-  </section>
+<a href="signup.html" class="primary-btn">
+Get Started
+</a>
+
+<a href="login.html" class="secondary-btn">
+Login
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat-card">
+<h2>24/7</h2>
+<p>AI Assistance</p>
+</div>
+
+<div class="stat-card">
+<h2>100%</h2>
+<p>Cloud Based</p>
+</div>
+
+<div class="stat-card">
+<h2>Real-Time</h2>
+<p>Announcements</p>
+</div>
+
+<div class="stat-card">
+<h2>Secure</h2>
+<p>Firebase Authentication</p>
+</div>
+
+</section>
+
+<section class="features">
+
+<h2 class="section-title">
+Platform Features
+</h2>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+<i class="fa-solid fa-calendar-check"></i>
+<h3>Attendance Tracker</h3>
+<p>Monitor attendance percentage and subject-wise records.</p>
+</div>
+
+<div class="feature-card">
+<i class="fa-solid fa-list-check"></i>
+<h3>Task Manager</h3>
+<p>Create, manage and complete daily academic tasks.</p>
+</div>
+
+<div class="feature-card">
+<i class="fa-solid fa-book"></i>
+<h3>Notes Management</h3>
+<p>Upload and organize study materials efficiently.</p>
+</div>
+
+<div class="feature-card">
+<i class="fa-solid fa-table"></i>
+<h3>Timetable Planner</h3>
+<p>Manage your class schedule in one place.</p>
+</div>
+
+<div class="feature-card">
+<i class="fa-solid fa-robot"></i>
+<h3>AI Study Assistant</h3>
+<p>Ask study-related questions and get instant help.</p>
+</div>
+
+<div class="feature-card">
+<i class="fa-solid fa-bullhorn"></i>
+<h3>Admin Announcements</h3>
+<p>Receive important updates instantly from administrators.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="cta">
+
+<h2>Ready to Boost Your Productivity?</h2>
+
+<p>
+Join AI Student Assistant and manage your academics smarter.
+</p>
+
+<a href="signup.html">
+Start Now
+</a>
+
+</section>
+
+<footer>
+
+© 2026 AI Student Assistant • Final Year Project
+
+</footer>
 
 </body>
 </html>

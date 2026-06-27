@@ -6,7 +6,7 @@ const chatContainer = document.querySelector("#chat-container");
 
 
 // OPENROUTER API KEY
-const API_KEY = "YOUR_API_KEY";
+const API_KEY = "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";
 
 
 chatForm.addEventListener("submit", async (e) => {
